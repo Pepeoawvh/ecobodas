@@ -59,7 +59,7 @@ const HeroCarousel = () => {
       setCurrentSlide((prevSlide) => 
         prevSlide === slides.length - 1 ? 0 : prevSlide + 1
       );
-    }, 000); // Tiempo entre cambios de slide
+    }, 8000); // Tiempo entre cambios de slide
 
     return () => clearInterval(timer);
   }, []);
