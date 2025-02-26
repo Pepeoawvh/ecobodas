@@ -30,3 +30,35 @@ h1 {
 a {
   color: var(--accent);
 }
+
+/* Personalización de scrollbar para toda la aplicación */
+@layer base {
+  html {
+    @apply scrollbar scrollbar-thin scrollbar-thumb-emerald-200 scrollbar-track-gray-100 hover:scrollbar-thumb-emerald-300 scrollbar-thumb-rounded-full;
+  }
+  
+  /* Para elementos con overflow-auto o overflow-scroll */
+  .overflow-auto,
+  .overflow-scroll,
+  .overflow-y-auto,
+  .overflow-y-scroll,
+  .overflow-x-auto,
+  .overflow-x-scroll {
+    @apply scrollbar scrollbar-thin scrollbar-thumb-emerald-200 scrollbar-track-gray-100 hover:scrollbar-thumb-emerald-300 scrollbar-thumb-rounded-full;
+  }
+}
+
+/* Clases personalizadas para scrollbars específicas */
+@layer components {
+  .scrollbar-primary {
+    @apply scrollbar scrollbar-thin scrollbar-thumb-emerald-600 scrollbar-track-emerald-50 hover:scrollbar-thumb-emerald-500 scrollbar-thumb-rounded-full;
+  }
+  
+  .scrollbar-secondary {
+    @apply scrollbar scrollbar-thin scrollbar-thumb-amber-300 scrollbar-track-gray-100 hover:scrollbar-thumb-amber-400 scrollbar-thumb-rounded-full;
+  }
+  
+  .scrollbar-admin {
+    @apply scrollbar scrollbar-thin scrollbar-thumb-blue-300 scrollbar-track-gray-100 hover:scrollbar-thumb-blue-400 scrollbar-thumb-rounded-full;
+  }
+}

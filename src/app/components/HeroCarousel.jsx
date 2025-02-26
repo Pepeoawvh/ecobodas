@@ -32,16 +32,18 @@ const HeroCarousel = () => {
       Component: Slide2,
       props: {
         imageUrl: "/images/backgrounds/Digitales.svg",
-        overlayTitle: "",
+        mobileImageUrl: "/images/backgrounds/DigitalesSF.svg", // Imagen específica para móvil
         overlayPosition: "left",
         overlayGradient: "from-emerald-800/20 to-transparent",
-        imageStyles: "object-cover object-right"
+        imageStyles: "object-cover object-right",
+        // overlayTitle se ha quitado
       }
     },
     {
       Component: Slide3,
       props: {
-        imageUrl: "/images/backgrounds/Herobg3.svg",
+        imageUrl: "/images/backgrounds/Desktop-Image3.svg",
+        mobileImageUrl: "/images/backgrounds/Mobile-Image3.svg", // Imagen específica para móvil
         card: {
           title: "Eco-friendly y Sostenible",
           description: "Contribuye al medio ambiente con nuestras invitaciones digitales",
@@ -59,7 +61,7 @@ const HeroCarousel = () => {
       setCurrentSlide((prevSlide) => 
         prevSlide === slides.length - 1 ? 0 : prevSlide + 1
       );
-    }, 8000); // Tiempo entre cambios de slide
+    }, 9000); // Tiempo entre cambios de slide
 
     return () => clearInterval(timer);
   }, []);

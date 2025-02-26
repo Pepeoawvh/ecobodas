@@ -6,7 +6,8 @@ import ProductCard from "./components/ProductCard";
 import TestimonialCard from "./components/TestimonialCard";
 import FeatureCard from "./components/FeatureCard";
 import HeroCarousel from "./components/HeroCarousel";
-import Footer from "./components/Footer";
+import HowItWorks from "./components/HowItWorks";
+
 
 
 export default function Home() {
@@ -42,9 +43,9 @@ export default function Home() {
       <HeroCarousel />
 
       {/* Productos destacados */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-[#ffffff7a]">
         <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">
+          <h2 className="text-4xl font-bold text-center mb-12 text-emerald-800">
             Diseños Destacados
           </h2>
           {loading ? (
@@ -123,6 +124,7 @@ export default function Home() {
               date="Enero 2024"
             />
           </div>
+          <HowItWorks />
         </div>
       </section>
     </div>

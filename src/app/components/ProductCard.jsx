@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+
 const ProductCard = ({ product = {}, isAdmin = false, onToggleFeatured, onEdit, onDelete }) => {
   if (!product) {
     return null;
@@ -10,6 +11,7 @@ const ProductCard = ({ product = {}, isAdmin = false, onToggleFeatured, onEdit, 
     image = '',
     title = '',
     category = '',
+    productType = '', // Añadida nueva propiedad
     description = '',
     price = '0',
     paymentLink = '#',
@@ -42,7 +44,14 @@ const ProductCard = ({ product = {}, isAdmin = false, onToggleFeatured, onEdit, 
         />
       </div>
       <div className="p-4">
-        <span className="text-xs font-semibold text-primary">{category}</span>
+        <div className="flex justify-between items-center">
+          <span className="text-xs font-semibold text-primary">{category}</span>
+          {productType && (
+            <span className="text-xs bg-emerald-100 text-emerald-800 px-2 py-1 rounded-full">
+              {productType}
+            </span>
+          )}
+        </div>
         <h3 className="text-lg font-semibold text-gray-800 mt-1">{title}</h3>
         <p className="text-gray-500 text-sm mt-2 line-clamp-2">{description}</p>
         <p className="text-accent font-bold mt-2">${price}</p>
@@ -90,7 +99,7 @@ const ProductCard = ({ product = {}, isAdmin = false, onToggleFeatured, onEdit, 
               href={paymentLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full mt-4 border-2 border-[#FFB300] text-[#FFB300] text-sm hover:text-white hover:bg-[#FFB300] py-2 px-4 rounded hover:bg-opacity-90 transition-colors inline-block text-center"
+              className="w-full mt-4 border-2 border-emerald-800 text-emerald-800 text-sm hover:text-white hover:bg-[#FFB300] py-2 px-4 rounded hover:bg-opacity-90 transition-colors inline-block text-center"
             >
               Ver Demo
             </Link>
@@ -98,14 +107,11 @@ const ProductCard = ({ product = {}, isAdmin = false, onToggleFeatured, onEdit, 
               href={paymentLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full mt-4 border-2  text-shadow text-sm text-white bg-emerald-800 py-2 px-4 rounded hover:bg-emerald-600  transition-colors inline-block text-center"
+              className="w-full mt-4 border-2 text-shadow text-sm text-white bg-emerald-800 py-2 px-4 rounded hover:bg-emerald-600 transition-colors inline-block text-center"
             >
               Comprar
             </Link>
-
-            
           </div>
-          
         )}
       </div>
     </div>

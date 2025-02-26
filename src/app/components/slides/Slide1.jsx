@@ -12,7 +12,7 @@ const Slide1 = ({ title, description, imageUrl, buttons }) => {
         className="object-cover z-[-1]"
       />
       <div className="text-center space-y-6 max-w-4xl mx-auto px-4">
-        <h1 className="text-6xl font-bold text-gray-800">
+        <h1 className="text-4xl font-bold text-[#3a5729]">
           {title}
         </h1>
         <p className="text-xl text-gray-600">
