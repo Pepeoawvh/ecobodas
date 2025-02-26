@@ -4,23 +4,28 @@ import { useState, useEffect } from 'react';
 const Slide2 = ({ 
   imageUrl, 
   mobileImageUrl, // Imagen específica para móvil
-  mobileImageStyles = "object-fill", // Estilos específicos para la imagen en móvil
+  mobileObjectFit = "contain", // Valor para móvil
+  mobileObjectPosition = "center", // Posición para móvil
   overlayPosition, 
   overlayGradient, 
-  imageStyles 
+  desktopObjectFit = "cover", // Valor para escritorio
+  desktopObjectPosition = "center", // Posición para escritorio
 }) => {
   const [currentImage, setCurrentImage] = useState(imageUrl);
-  const [currentStyles, setCurrentStyles] = useState(imageStyles);
+  const [objectFit, setObjectFit] = useState(desktopObjectFit);
+  const [objectPosition, setObjectPosition] = useState(desktopObjectPosition);
   
   // Detecta el tamaño de pantalla y cambia la imagen y sus estilos
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 768) {
         setCurrentImage(mobileImageUrl || imageUrl);
-        setCurrentStyles(mobileImageStyles || imageStyles);
+        setObjectFit(mobileObjectFit);
+        setObjectPosition(mobileObjectPosition);
       } else {
         setCurrentImage(imageUrl);
-        setCurrentStyles(imageStyles);
+        setObjectFit(desktopObjectFit);
+        setObjectPosition(desktopObjectPosition);
       }
     };
     
@@ -30,7 +35,7 @@ const Slide2 = ({
     // Escuchar cambios de tamaño
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [imageUrl, mobileImageUrl, imageStyles, mobileImageStyles]);
+  }, [imageUrl, mobileImageUrl, desktopObjectFit, mobileObjectFit, desktopObjectPosition, mobileObjectPosition]);
 
   return (
     <div className="relative h-[70vh] md:h-[70vh] w-full bg-[#ffffff86]">
@@ -39,7 +44,10 @@ const Slide2 = ({
         alt="Background"
         fill
         priority
-        className={currentStyles}
+        style={{ 
+          objectFit,
+          objectPosition 
+        }}
       />
       <div className={`absolute inset-0 bg-gradient-to-r ${overlayGradient}`}>
         <div className={`h-full flex items-center ${

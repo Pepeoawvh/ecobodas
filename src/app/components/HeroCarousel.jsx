@@ -29,15 +29,17 @@ const HeroCarousel = () => {
       }
     },
     {
-      Component: Slide2,
-      props: {
-        imageUrl: "/images/backgrounds/Digitales.svg",
-        mobileImageUrl: "/images/backgrounds/DigitalesSF.svg", // Imagen específica para móvil
-        overlayPosition: "left",
-        overlayGradient: "from-emerald-800/20 to-transparent",
-        imageStyles: "object-cover object-right",
-        // overlayTitle se ha quitado
-      }
+Component: Slide2,
+  props: {
+    imageUrl: "/images/backgrounds/Digitales.svg",
+    mobileImageUrl: "/images/backgrounds/DigitalesSF.svg", 
+    overlayPosition: "left",
+    overlayGradient: "from-emerald-800/20 to-transparent",
+    desktopObjectFit: "contain",
+    desktopObjectPosition: "center", // Centrado para pantallas grandes
+    mobileObjectFit: "contain",
+    mobileObjectPosition: "center", // Centrado para móviles
+  }
     },
     {
       Component: Slide3,
