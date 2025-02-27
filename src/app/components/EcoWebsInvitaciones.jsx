@@ -170,7 +170,7 @@ const EcoWebsInvitaciones = () => {
       {/* Tabs Navigation */}
       <section className="bg-white py-6 sticky top-0 z-20 shadow-sm">
         <div className="max-w-6xl mx-auto px-4">
-          <div className="flex justify-center md:justify-start space-x-2 md:space-x-8 overflow-x-auto scrollbar scrollbar-thin scrollbar-thumb-emerald-200">
+          <div className="flex justify-center md:justify-start space-x-2 md:space-x-8 overflow-x-auto scrollbar-thin scrollbar-thumb-emerald-200">
             <button 
               onClick={() => setActiveTab('overview')} 
               className={`px-4 py-2 whitespace-nowrap ${activeTab === 'overview' ? 'text-emerald-700 border-b-2 border-emerald-500' : 'text-gray-500 hover:text-emerald-600'}`}

@@ -38,11 +38,7 @@ const GerminablesHero = () => {
                 fill
                 className="object-cover rounded-2xl shadow-lg"
               />
-              <div className="absolute -bottom-6 -right-6 p-4 bg-white rounded-lg shadow-md max-w-[200px]">
-                <p className="text-sm font-medium text-emerald-800">
-                  Elaboradas artesanalmente con papel reciclado y semillas naturales
-                </p>
-              </div>
+             
               <div className="absolute -top-4 -right-4 w-24 h-24 bg-emerald-100 rounded-full z-[-1]" />
               <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-amber-100 rounded-full z-[-1]" />
             </div>
