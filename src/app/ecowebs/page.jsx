@@ -1,9 +1,14 @@
-import React from 'react'
+import React from "react";
+import EcoWebsInvitaciones from "../components/EcoWebsInvitaciones";
+export const metadata = {
+  title: "Invitaciones Web | EcoBodas",
+  description: "Sitios web personalizados para tu boda con múltiples funcionalidades: galerías, confirmación de asistencia, contador y más."
+};
 
-const Ecowebs = () => {
+export default function EcoWebs() {
   return (
-    <div>page</div>
-  )
+    <div className="min-h-screen">
+      <EcoWebsInvitaciones/>
+    </div>
+  );
 }
-
-export default Ecowebs
