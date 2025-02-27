@@ -22,7 +22,7 @@ const Navbar = () => {
             <Link href="/ecowebs" className="hover:text-emerald-500 hover:bg-emerald-50 border border-emerald-600 rounded-full px-2 py-1 text-emerald-800 transition-colors text-sm md:text-base">
               EcoWebs
             </Link>
-            <Link href="/Germinables" className="hover:text-emerald-500 hover:bg-emerald-50 border border-emerald-600 rounded-full px-2 py-1 text-emerald-800 transition-colors text-sm md:text-base">
+            <Link href="/germinables" className="hover:text-emerald-500 hover:bg-emerald-50 border border-emerald-600 rounded-full px-2 py-1 text-emerald-800 transition-colors text-sm md:text-base">
               Germinables
             </Link>
             <Link href="/ecoabout" className="hover:text-emerald-500 px-2 py-1 text-emerald-800 transition-colors text-sm md:text-base">
