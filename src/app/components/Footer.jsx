@@ -49,7 +49,7 @@ const Footer = () => {
                     height={22} 
                   />
                 </span>
-                Contácto Webs
+                Contacto Webs
               </Link>
               <p className="text-gray-300">info@ecobodas.cl</p>
             </div>
