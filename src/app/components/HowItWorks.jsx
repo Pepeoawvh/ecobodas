@@ -35,7 +35,7 @@ const HowItWorks = () => {
       secondIcon: "/images/icons/webIcon.svg", // Segundo icono para alternar
       action: {
         text: "¿Cuál es la diferencia?",
-        href: "/ecoproducts"
+        href: "" //SECCION DE COMPARACION DE PRODUCTOS
       }
     },
     {
@@ -45,7 +45,7 @@ const HowItWorks = () => {
       icon: "/images/icons/buyicon.svg", 
       action: {
         text: "Compras 100% Protegidas",
-        href: "/ecoproducts"
+        href: "/ecoabout" // SECCION DE PREGUNTAS FRECUENTES
       }
     }
   ];
@@ -56,7 +56,7 @@ const HowItWorks = () => {
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-emerald-800 mb-4">¿Cómo funciona?</h2>
           <p className="text-lg text-emerald-700 max-w-2xl mx-auto">
-            ¡Para nuestras invitaciones Digitales el proceso es muy sencillo! <br/> En solo tres pasos estaremos trabajando en tu invitación personalizada
+            ¡Para nuestras Invitaciones Digitales el proceso es muy sencillo! <br/> En solo tres pasos estaremos trabajando en tu invitación personalizada
           </p>
         </div>
         

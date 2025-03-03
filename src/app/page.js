@@ -7,6 +7,7 @@ import TestimonialCard from "./components/TestimonialCard";
 import FeatureCard from "./components/FeatureCard";
 import HeroCarousel from "./components/HeroCarousel";
 import HowItWorks from "./components/HowItWorks";
+import WspButton from "./components/WspButton";
 
 
 
@@ -40,6 +41,7 @@ export default function Home() {
   return (
 
       <div className="min-h-screen">
+              <WspButton />
       <HeroCarousel />
 
       {/* Productos destacados */}

@@ -61,32 +61,32 @@ const EcoWebsInvitaciones = () => {
 
   const features = [
     {
-      icon: "/images/icons/countdown.svg",
+      icon: "/images/webs/counter.svg",
       title: "Contador de tiempo",
       description: "Muestra el tiempo restante hasta tu gran día, creando expectativa entre tus invitados."
     },
     {
-      icon: "/images/icons/gallery.svg",
+      icon: "/images/webs/galleryicon.svg",
       title: "Galería de fotos",
       description: "Comparte tus mejores momentos con una hermosa galería de imágenes personalizada."
     },
     {
-      icon: "/images/icons/rsvp.svg",
+      icon: "/images/webs/checklist.svg",
       title: "Confirmación de asistencia",
       description: "Facilita a tus invitados confirmar su asistencia desde cualquier dispositivo."
     },
     {
-      icon: "/images/icons/panel.svg",
+      icon: "/images/webs/admin.svg",
       title: "Panel de administración",
       description: "Accede a información sobre invitados, preferencias alimentarias y más."
     },
     {
-      icon: "/images/icons/dress.svg",
+      icon: "/images/webs/dresscode.svg",
       title: "Sección de Dress Code",
       description: "Comunica claramente el código de vestimenta para tu evento especial."
     },
     {
-      icon: "/images/icons/gift.svg",
+      icon: "/images/webs/gifts.svg",
       title: "Lista de regalos",
       description: "Incluye una sección para sugerencias de regalos o enlaces a listas de deseos."
     }
@@ -264,7 +264,7 @@ const EcoWebsInvitaciones = () => {
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {features.map((feature, index) => (
+                {features.map((feature, index) => (
                 <FeatureCard 
                   key={index}
                   icon={feature.icon}

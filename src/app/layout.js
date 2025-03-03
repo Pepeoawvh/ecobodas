@@ -23,9 +23,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="es" className="scrollbar scrollbar-thin scrollbar-thumb-emerald-200 scrollbar-track-gray-100 hover:scrollbar-thumb-emerald-300 scrollbar-thumb-rounded-full">
+    <html lang="es" className=" scrollbar-thin scrollbar-thumb-emerald-200 scrollbar-track-gray-100 hover:scrollbar-thumb-emerald-300 scrollbar-thumb-rounded-full">
       <AuthProvider>
         <body className={`${lexend.className} relative min-h-screen`}>
+
           {/* Contenedor de la imagen de fondo */}
           <div className="fixed inset-0 w-full h-full">
             <Image
@@ -42,7 +43,9 @@ export default function RootLayout({ children }) {
           <div className="relative z-10">
             <main className="text-emerald-800 md:max-w-6xl md:mx-auto md:px-4">
               <Navbar />
+
               {children}
+
             </main>
             <Footer />
           </div>

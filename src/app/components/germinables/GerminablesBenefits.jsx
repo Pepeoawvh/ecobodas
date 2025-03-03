@@ -6,32 +6,32 @@ const GerminablesBenefits = () => {
     {
       title: "Ecológicas y sostenibles",
       description: "Reducen la huella de carbono y contribuyen activamente a la conservación del medio ambiente",
-      icon: "/images/icons/eco-icon.svg"
+      icon: "/images/germinables/ECOLOGICAS.svg"
     },
     {
       title: "Memorables y únicas",
       description: "Ofrecen una experiencia interactiva que sorprenderá a tus invitados",
-      icon: "/images/icons/unique-icon.svg"
+      icon: "/images/germinables/MEMORABLES.svg"
     },
     {
       title: "Totalmente personalizables",
       description: "Diseños exclusivos adaptados a tu estilo y temática de boda",
-      icon: "/images/icons/design-icon.svg"
+      icon: "/images/germinables/PERSONALIZABLES.svg"
     },
     {
       title: "Variedad de semillas",
       description: "Flores silvestres, hierbas aromáticas o vegetales según tu preferencia",
-      icon: "/images/icons/seed-icon.svg"
+      icon: "/images/germinables/SEMILLAS.svg"
     },
     {
       title: "Acabados artesanales",
       description: "Texturas naturales, bordes irregulares y detalles hechos a mano",
-      icon: "/images/icons/handmade-icon.svg"
+      icon: "/images/germinables/ACABADOS.svg"
     },
     {
       title: "Complementos a juego",
       description: "Sobres, etiquetas, sellos y decoración adicional en el mismo estilo",
-      icon: "/images/icons/matching-icon.svg"
+      icon: "/images/germinables/COMPLEMENTOS.svg"
     }
   ];
 
@@ -48,14 +48,14 @@ const GerminablesBenefits = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {benefits.map((benefit, index) => (
             <div key={index} className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-              <div className="flex items-start mb-4">
-                <div className="w-12 h-12 mr-4">
+              <div className="flex mb-4">
+                <div className="flex w-32 items-center h-32 mr-4">
                   <Image 
                     src={benefit.icon} 
                     alt={benefit.title} 
-                    width={48} 
-                    height={48} 
-                    className="text-emerald-600"
+                    width={100} 
+                    height={100} 
+                    className="text-emerald-600 "
                   />
                 </div>
                 <div>

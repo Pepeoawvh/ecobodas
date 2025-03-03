@@ -1,10 +1,14 @@
 'use client'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { firestoreDB } from '../../firebase/config';
 import { ephesis } from '../../ui/fonts';
 
 const GerminablesProducts = () => {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState('todos');
   
   const categories = [
@@ -15,60 +19,35 @@ const GerminablesProducts = () => {
     { id: 'floral', name: 'Floral' },
   ];
   
-  const products = [
-    {
-      id: 1,
-      name: "Modelo Lavanda",
-      image: "/images/products/germinable1.jpg",
-      category: "rustico",
-      price: "$xx.xx",
-      description: "Invitación con semillas de lavanda, textura natural y detalles en acuarela"
-    },
-    {
-      id: 2,
-      name: "Modelo Margarita",
-      image: "/images/products/germinable2.jpg",
-      category: "floral",
-      price: "$xx.xx",
-      description: "Diseño delicado con semillas de margarita y acabados florales"
-    },
-    {
-      id: 3,
-      name: "Modelo Eucalipto",
-      image: "/images/products/germinable3.jpg",
-      category: "elegante",
-      price: "$xx.xx",
-      description: "Estilo sofisticado con semillas de eucalipto y toques dorados"
-    },
-    {
-      id: 4,
-      name: "Modelo Hierbas",
-      image: "/images/products/germinable4.jpg",
-      category: "minimalista",
-      price: "$xx.xx",
-      description: "Diseño limpio con semillas de hierbas aromáticas y líneas simples"
-    },
-    {
-      id: 5,
-      name: "Modelo Silvestre",
-      image: "/images/products/germinable5.jpg",
-      category: "rustico",
-      price: "$xx.xx",
-      description: "Combinación de flores silvestres con estilo campestre"
-    },
-    {
-      id: 6,
-      name: "Modelo Botánico",
-      image: "/images/products/germinable6.jpg",
-      category: "elegante",
-      price: "$xx.xx",
-      description: "Ilustraciones botánicas detalladas y semillas mixtas"
-    },
-  ];
+  useEffect(() => {
+    const fetchGerminableProducts = async () => {
+      try {
+        const productsQuery = query(
+          collection(firestoreDB, 'ecoproductos'),
+          where('productType', '==', 'Invitación Germinable')
+        );
+        
+        const querySnapshot = await getDocs(productsQuery);
+        const productsData = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+          category: doc.data().style || 'otros' // Usamos el campo 'style' como categoría
+        }));
+        
+        setProducts(productsData);
+      } catch (error) {
+        console.error('Error fetching germinable products:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchGerminableProducts();
+  }, []);
   
   const filteredProducts = activeCategory === 'todos' 
     ? products 
-    : products.filter(product => product.category === activeCategory);
+    : products.filter(product => product.category.toLowerCase() === activeCategory);
 
   return (
     <section id="products" className="py-16 bg-white">
@@ -78,7 +57,7 @@ const GerminablesProducts = () => {
             Nuestros modelos <span className={`${ephesis.className} text-4xl md:text-5xl`}>germinables</span>
           </h2>
           <p className="text-lg text-emerald-700">
-            Con más de 200 diseños realizados, estas son algunas de nuestras creaciones más populares.
+            Con más de 400 diseños realizados, estas son algunas de nuestras creaciones más populares.
             Cada una puede adaptarse completamente a tu estilo y necesidades.
           </p>
         </div>
@@ -99,33 +78,45 @@ const GerminablesProducts = () => {
           ))}
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProducts.map(product => (
-            <div key={product.id} className="bg-white border border-emerald-100 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-              <div className="relative h-64">
-                <Image 
-                  src={product.image} 
-                  alt={product.name}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-emerald-800 mb-2">{product.name}</h3>
-                <p className="text-emerald-700 mb-4">{product.description}</p>
-                <div className="flex justify-between items-center">
-                  <Link 
-                    href={`/ecoproducts/${product.id}`}
-                    className="text-emerald-700 font-medium hover:text-emerald-600"
-                  >
-                    Ver detalles →
-                  </Link>
-                  <span className="font-bold text-emerald-800">{product.price}</span>
+        {loading ? (
+          <div className="text-center py-12">
+            <p className="text-xl text-emerald-600">Cargando productos germinables...</p>
+          </div>
+        ) : filteredProducts.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredProducts.map(product => (
+              <div key={product.id} className="bg-white border border-emerald-100 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div className="relative h-64">
+                  <Image 
+                    src={product.imageUrl || "/images/placeholder-product.jpg"} 
+                    alt={product.name}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold text-emerald-800 mb-2">{product.name}</h3>
+                  <p className="text-emerald-700 mb-4">{product.description}</p>
+                  <div className="flex justify-between items-center">
+                    <Link 
+                      href={`/ecoproducts/${product.id}`}
+                      className="text-emerald-700 font-medium hover:text-emerald-600"
+                    >
+                      Ver detalles →
+                    </Link>
+                    <span className="font-bold text-emerald-800">${product.price}</span>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12">
+            <p className="text-xl text-emerald-700">
+              Estamos en proceso de creación de nuevos modelos germinables. ¡Vuelve pronto para descubrirlos!
+            </p>
+          </div>
+        )}
         
         <div className="mt-16 text-center">
           <p className="text-emerald-700 text-lg mb-6">
