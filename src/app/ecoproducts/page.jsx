@@ -139,6 +139,7 @@ export default function Products() {
               <ProductCard 
                 key={product.id}
                 product={product}
+                showInfo={false} // Mostramos tarjetas sin información detallada
               />
             ))}
           </div>

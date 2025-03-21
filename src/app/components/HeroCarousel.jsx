@@ -45,10 +45,10 @@ Component: Slide2,
       Component: Slide3,
       props: {
         imageUrl: "/images/backgrounds/Desktop-Image3.svg",
-        mobileImageUrl: "/images/backgrounds/Mobile-Image3.svg", // Imagen específica para móvil
+        mobileImageUrl: "/images/backgrounds/Valores.png", // Imagen específica para móvil
         card: {
-          title: "Eco-friendly y Sostenible",
-          description: "Contribuye al medio ambiente con nuestras invitaciones digitales",
+          title: "",
+          description: "",
           position: "right",
           backgroundColor: "bg-white/80",
           textColor: "text-emerald-800"

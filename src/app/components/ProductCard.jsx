@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 
-const ProductCard = ({ product = {}, isAdmin = false, onToggleFeatured, onEdit, onDelete }) => {
+const ProductCard = ({ 
+  product = {}, 
+  isAdmin = false, 
+  onToggleFeatured, 
+  onEdit, 
+  onDelete,
+  showInfo = true // Nueva prop para controlar si se muestra información
+}) => {
+  const [isHovered, setIsHovered] = useState(false);
+  
   if (!product) {
     return null;
   }
@@ -15,28 +24,81 @@ const ProductCard = ({ product = {}, isAdmin = false, onToggleFeatured, onEdit, 
     description = '',
     price = '0',
     paymentLink = '#',
-    previewLink = '', // Nuevo campo para el enlace de vista previa
-    videoUrl = '', // Nuevo campo para la URL del video
+    previewLink = '',
+    videoUrl = '',
     featured = false
   } = product;
 
   const isVideoUrl = (url) => {
+    if (!url) return false;
     const videoExtensions = ['.mp4', '.webm', '.ogg'];
-    return videoExtensions.some((ext) => url.endsWith(ext));
+    return videoExtensions.some((ext) => url.toLowerCase().endsWith(ext));
   };
 
   const getEmbedUrl = (url) => {
-    const youtubeMatch = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i);
-    if (youtubeMatch) {
-      return `https://www.youtube.com/embed/${youtubeMatch[1]}`;
+    if (!url) return '';
+    
+    const patterns = [
+      /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i,
+      /youtube.com\/shorts\/([^"&?\/\s]{11})/i,
+      /youtube.com\/embed\/([^"&?\/\s]{11})/i
+    ];
+    
+    for (const pattern of patterns) {
+      const match = url.match(pattern);
+      if (match) {
+        return `https://www.youtube.com/embed/${match[1]}?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&loop=1&playlist=${match[1]}`;
+      }
     }
+    
     return url;
   };
 
   return (
-    <div className="bg-gray-100 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow relative">
+    <div 
+      className={`relative rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow group h-[500px] w-[280px] mx-auto ${isAdmin ? '' : 'hover:opacity-100'}`}
+      onMouseEnter={() => !isAdmin && setIsHovered(true)}
+      onMouseLeave={() => !isAdmin && setIsHovered(false)}
+    >
+      {/* Fondo de imagen */}
+      <div className="absolute inset-0 w-full h-full">
+        <img 
+          src={image} 
+          alt={title}
+          className="w-full h-full object-cover"
+        />
+      </div>
+      
+      {/* Overlay oscuro para mejorar legibilidad del texto */}
+      <div className={`absolute inset-0 bg-black ${showInfo ? 'bg-opacity-40' : 'bg-opacity-10'} transition-opacity duration-300 ${isHovered ? 'opacity-0' : 'opacity-100'}`}></div>
+      
+      {/* Video que aparece al hacer hover */}
+      {videoUrl && (
+        <div className={`absolute inset-0 w-full h-full transition-opacity duration-300 z-10 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
+          {isVideoUrl(videoUrl) ? (
+            <video 
+              src={videoUrl} 
+              className="w-full h-full object-cover"
+              autoPlay
+              loop
+              muted
+              playsInline
+            />
+          ) : (
+            <iframe
+              src={isHovered ? getEmbedUrl(videoUrl) : ''}
+              className="w-full h-full"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          )}
+        </div>
+      )}
+      
+      {/* Estrella de destacado */}
       {featured && (
-        <div className="absolute top-2 right-2 z-10">
+        <div className="absolute top-2 right-2 z-20">
           <svg 
             xmlns="http://www.w3.org/2000/svg" 
             viewBox="0 0 24 24" 
@@ -51,103 +113,96 @@ const ProductCard = ({ product = {}, isAdmin = false, onToggleFeatured, onEdit, 
           </svg>
         </div>
       )}
-      <div className="h-48 w-full overflow-hidden">
-        {videoUrl ? (
-          isVideoUrl(videoUrl) ? (
-            <video 
-              src={videoUrl} 
-              controls 
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            <iframe
-              src={getEmbedUrl(videoUrl)}
-              className="w-full h-full"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-          )
-        ) : (
-          <img 
-            src={image} 
-            alt={title}
-            className="w-full h-full object-cover hover:scale-105 transition-transform"
-          />
-        )}
-      </div>
-      <div className="p-4">
-        <div className="flex justify-between items-center">
-          <span className="text-xs font-semibold text-primary">{category}</span>
-          {productType && (
-            <span className="text-xs bg-emerald-100 text-emerald-800 px-2 py-1 rounded-full">
-              {productType}
-            </span>
-          )}
-        </div>
-        <h3 className="text-lg font-semibold text-gray-800 mt-1">{title}</h3>
-        <p className="text-gray-500 text-sm mt-2 line-clamp-2">{description}</p>
-        <p className="text-accent font-bold mt-2">${price}</p>
-        
-        {isAdmin ? (
-          <div className="mt-4 flex justify-between items-center">
-            <button
-              onClick={() => onToggleFeatured(product)}
-              className={`p-2 rounded-full hover:bg-gray-100 ${
-                featured ? 'text-yellow-400' : 'text-gray-400'
-              }`}
-              title={featured ? 'Quitar de destacados' : 'Marcar como destacado'}
-            >
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                viewBox="0 0 24 24" 
-                fill="currentColor" 
-                className="w-6 h-6"
-              >
-                <path 
-                  fillRule="evenodd" 
-                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
-                  clipRule="evenodd" 
-                />
-              </svg>
-            </button>
-            <div className="space-x-2">
-              <button
-                onClick={() => onEdit(product)}
-                className="text-blue-600 rounded-full hover:text-blue-800 font-medium"
-              >
-                Editar
-              </button>
-              <button
-                onClick={() => onDelete(id)}
-                className="text-red-600 rounded-full hover:text-red-800 font-medium"
-              >
-                Eliminar
-              </button>
+      
+      {/* Contenido de la tarjeta superpuesto */}
+      <div className="absolute inset-0 flex flex-col justify-between p-4 text-white z-20">
+        {/* Información del producto (título, descripción, etc.) */}
+        {showInfo && (
+          <div className={`transition-opacity duration-300 ${isHovered ? 'opacity-0' : 'opacity-100'}`}>
+            <div className="flex justify-between items-center">
+              <span className="text-xs font-semibold px-2 py-1 bg-emerald-700 rounded-full">{category}</span>
+              {productType && (
+                <span className="text-xs bg-emerald-100 text-emerald-800 px-2 py-1 rounded-full">
+                  {productType}
+                </span>
+              )}
             </div>
+            <h3 className="text-xl font-bold mt-3 drop-shadow-md">{title}</h3>
+            <p className="text-white text-sm mt-2 line-clamp-3 drop-shadow-md">{description}</p>
           </div>
-        ) : (
-          <div className="grid gap-x-5 grid-cols-2 mt-4">
-            {productType === "Invitación Digital" && previewLink && (
+        )}
+        
+        {/* Espacio intermedio vacío para empujar los botones abajo */}
+        <div className="flex-grow"></div>
+        
+        {/* Precio y botones en la parte inferior */}
+        <div>
+          {showInfo && (
+            <p className={`text-2xl font-bold mt-2 mb-4 drop-shadow-md transition-opacity duration-300 ${isHovered ? 'opacity-0' : 'opacity-100'}`}>
+              ${price}
+            </p>
+          )}
+          
+          {isAdmin ? (
+            <div className="flex justify-between items-center bg-black bg-opacity-50 p-2 rounded">
+              <button
+                onClick={() => onToggleFeatured(product)}
+                className={`p-2 rounded-full ${
+                  featured ? 'text-yellow-400' : 'text-gray-300'
+                }`}
+                title={featured ? 'Quitar de destacados' : 'Marcar como destacado'}
+              >
+                <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  viewBox="0 0 24 24" 
+                  fill="currentColor" 
+                  className="w-6 h-6"
+                >
+                  <path 
+                    fillRule="evenodd" 
+                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                    clipRule="evenodd" 
+                  />
+                </svg>
+              </button>
+              <div className="space-x-2">
+                <button
+                  onClick={() => onEdit(product)}
+                  className="text-white hover:text-blue-300 font-medium"
+                >
+                  Editar
+                </button>
+                <button
+                  onClick={() => onDelete(id)}
+                  className="text-white hover:text-red-300 font-medium"
+                >
+                  Eliminar
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className={`flex flex-col space-y-2 ${isHovered ? 'bg-black bg-opacity-40 p-2 rounded pointer-events-auto' : ''}`}>
+              {productType === "Invitación Digital" && previewLink && (
+                <Link
+                  href={previewLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full border-2 border-white text-white text-sm hover:bg-emerald-700 hover:border-emerald-700 py-2 px-4 rounded transition-colors inline-block text-center"
+                >
+                  Ver Demo
+                </Link>
+              )}
               <Link
-                href={previewLink}
+                href={paymentLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full mt-4 border-2 border-emerald-800 text-emerald-800 text-sm hover:text-white hover:bg-[#FFB300] py-2 px-4 rounded hover:bg-opacity-90 transition-colors inline-block text-center"
+                className="w-full border-2 text-shadow text-sm text-white bg-emerald-800 py-2 px-4 rounded hover:bg-emerald-600 transition-colors inline-block text-center"
               >
-                Ver Demo
+                Cotizar
               </Link>
-            )}
-            <Link
-              href={paymentLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full mt-4 border-2 text-shadow text-sm text-white bg-emerald-800 py-2 px-4 rounded hover:bg-emerald-600 transition-colors inline-block text-center"
-            >
-              Comprar
-            </Link>
-          </div>
-        )}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

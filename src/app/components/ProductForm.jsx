@@ -9,8 +9,8 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
     productType: product?.productType || '',
     image: product?.image || '',
     paymentLink: product?.paymentLink || '',
-    previewLink: product?.previewLink || '', // Nuevo campo para el enlace de vista previa
-    videoUrl: product?.videoUrl || '', // Nuevo campo para la URL del video
+    previewLink: product?.previewLink || '',
+    videoUrl: product?.videoUrl || '',
     featured: product?.featured || false,
   });
 
@@ -124,19 +124,6 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
           </div>
         </div>
 
-        {formData.productType === "Invitación Digital" && (
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Link de Vista Previa</label>
-            <input
-              type="url"
-              value={formData.previewLink}
-              onChange={(e) => setFormData({...formData, previewLink: e.target.value})}
-              className="mt-1 w-full p-2 border rounded"
-              placeholder="https://ejemplo.com/preview"
-            />
-          </div>
-        )}
-
         <div>
           <label className="block text-sm font-medium text-gray-700">URL de la imagen</label>
           <input
@@ -148,16 +135,37 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
           />
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">URL del Video (opcional)</label>
-          <input
-            type="url"
-            value={formData.videoUrl}
-            onChange={(e) => setFormData({...formData, videoUrl: e.target.value})}
-            className="mt-1 w-full p-2 border rounded"
-            placeholder="https://ejemplo.com/video"
-          />
-        </div>
+        {formData.productType === "Invitación Digital" && (
+          <>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Link de Vista Previa</label>
+              <input
+                type="url"
+                value={formData.previewLink}
+                onChange={(e) => setFormData({...formData, previewLink: e.target.value})}
+                className="mt-1 w-full p-2 border rounded"
+                placeholder="https://ejemplo.com/preview"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700">URL del Video (opcional)</label>
+              <input
+                type="url"
+                value={formData.videoUrl}
+                onChange={(e) => setFormData({...formData, videoUrl: e.target.value})}
+                className="mt-1 w-full p-2 border rounded"
+                placeholder="https://youtube.com/watch?v=XXXXXXXXXXX"
+              />
+              <p className="mt-1 text-sm text-gray-500">
+                Formatos soportados: 
+                <br />- Enlaces de YouTube (ej: https://youtube.com/watch?v=XXXXXXXXXXX)
+                <br />- Enlaces de YouTube Shorts (ej: https://youtube.com/shorts/XXXXXXXXXXX)
+                <br />- Videos directos (ej: https://ejemplo.com/video.mp4)
+              </p>
+            </div>
+          </>
+        )}
 
         <div>
           <label className="block text-sm font-medium text-gray-700">Link de Pago Mercado Pago</label>
