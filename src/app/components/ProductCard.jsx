@@ -11,12 +11,27 @@ const ProductCard = ({ product = {}, isAdmin = false, onToggleFeatured, onEdit, 
     image = '',
     title = '',
     category = '',
-    productType = '', // Añadida nueva propiedad
+    productType = '',
     description = '',
     price = '0',
     paymentLink = '#',
+    previewLink = '', // Nuevo campo para el enlace de vista previa
+    videoUrl = '', // Nuevo campo para la URL del video
     featured = false
   } = product;
+
+  const isVideoUrl = (url) => {
+    const videoExtensions = ['.mp4', '.webm', '.ogg'];
+    return videoExtensions.some((ext) => url.endsWith(ext));
+  };
+
+  const getEmbedUrl = (url) => {
+    const youtubeMatch = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i);
+    if (youtubeMatch) {
+      return `https://www.youtube.com/embed/${youtubeMatch[1]}`;
+    }
+    return url;
+  };
 
   return (
     <div className="bg-gray-100 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow relative">
@@ -37,11 +52,29 @@ const ProductCard = ({ product = {}, isAdmin = false, onToggleFeatured, onEdit, 
         </div>
       )}
       <div className="h-48 w-full overflow-hidden">
-        <img 
-          src={image} 
-          alt={title}
-          className="w-full h-full object-cover hover:scale-105 transition-transform"
-        />
+        {videoUrl ? (
+          isVideoUrl(videoUrl) ? (
+            <video 
+              src={videoUrl} 
+              controls 
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <iframe
+              src={getEmbedUrl(videoUrl)}
+              className="w-full h-full"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          )
+        ) : (
+          <img 
+            src={image} 
+            alt={title}
+            className="w-full h-full object-cover hover:scale-105 transition-transform"
+          />
+        )}
       </div>
       <div className="p-4">
         <div className="flex justify-between items-center">
@@ -95,14 +128,16 @@ const ProductCard = ({ product = {}, isAdmin = false, onToggleFeatured, onEdit, 
           </div>
         ) : (
           <div className="grid gap-x-5 grid-cols-2 mt-4">
-            <Link
-              href={paymentLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full mt-4 border-2 border-emerald-800 text-emerald-800 text-sm hover:text-white hover:bg-[#FFB300] py-2 px-4 rounded hover:bg-opacity-90 transition-colors inline-block text-center"
-            >
-              Ver Demo
-            </Link>
+            {productType === "Invitación Digital" && previewLink && (
+              <Link
+                href={previewLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full mt-4 border-2 border-emerald-800 text-emerald-800 text-sm hover:text-white hover:bg-[#FFB300] py-2 px-4 rounded hover:bg-opacity-90 transition-colors inline-block text-center"
+              >
+                Ver Demo
+              </Link>
+            )}
             <Link
               href={paymentLink}
               target="_blank"

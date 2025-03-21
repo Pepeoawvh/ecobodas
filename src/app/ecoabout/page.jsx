@@ -35,12 +35,12 @@ export default function About() {
           <div className="flex flex-col md:flex-row items-center gap-10">
             <div className="md:w-1/2">
               <div className="relative">
-                <div className="relative w-full aspect-square max-w-md mx-auto rounded-lg overflow-hidden shadow-lg">
+                <div className="flex relative w-full aspect-square max-w-md mx-auto overflow-hidden">
                   <Image 
-                    src="/images/about/team.jpg" 
+                    src="/images/logos/Ecobodaslogo.svg" 
                     alt="Equipo EcoBodas"
                     fill
-                    className="object-cover"
+                    className="object-fit"
                   />
                 </div>
                 <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-emerald-100 rounded-full z-[-1]" />

@@ -9,6 +9,8 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
     productType: product?.productType || '',
     image: product?.image || '',
     paymentLink: product?.paymentLink || '',
+    previewLink: product?.previewLink || '', // Nuevo campo para el enlace de vista previa
+    videoUrl: product?.videoUrl || '', // Nuevo campo para la URL del video
     featured: product?.featured || false,
   });
 
@@ -122,6 +124,19 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
           </div>
         </div>
 
+        {formData.productType === "Invitación Digital" && (
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Link de Vista Previa</label>
+            <input
+              type="url"
+              value={formData.previewLink}
+              onChange={(e) => setFormData({...formData, previewLink: e.target.value})}
+              className="mt-1 w-full p-2 border rounded"
+              placeholder="https://ejemplo.com/preview"
+            />
+          </div>
+        )}
+
         <div>
           <label className="block text-sm font-medium text-gray-700">URL de la imagen</label>
           <input
@@ -130,6 +145,17 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
             onChange={(e) => setFormData({...formData, image: e.target.value})}
             className="mt-1 w-full p-2 border rounded"
             required
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">URL del Video (opcional)</label>
+          <input
+            type="url"
+            value={formData.videoUrl}
+            onChange={(e) => setFormData({...formData, videoUrl: e.target.value})}
+            className="mt-1 w-full p-2 border rounded"
+            placeholder="https://ejemplo.com/video"
           />
         </div>
 
