@@ -3,14 +3,7 @@ import React from 'react';
 const FeatureCard = ({ title, description, icon, bgImage = '/images/backgrounds/leaf-pattern.jpg' }) => {
   return (
     <div className="relative h-[300px] rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 group">
-      {/* Imagen de fondo */}
-      <div className="absolute inset-0 w-full h-full">
-        <img 
-          src={bgImage} 
-          alt={title}
-          className="w-full h-full object-cover"
-        />
-      </div>
+
       
       {/* Overlay oscuro para mejorar legibilidad del texto */}
       <div className="absolute inset-0 bg-emerald-900 bg-opacity-70 group-hover:bg-opacity-50 transition-all duration-300"></div>

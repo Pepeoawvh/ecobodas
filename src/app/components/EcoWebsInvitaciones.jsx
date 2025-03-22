@@ -6,7 +6,7 @@ import { ephesis } from '../ui/fonts';
 
 // Componente para las características
 const FeatureCard = ({ icon, title, description }) => (
-  <div className="bg-white/80 shadow-sm rounded-lg p-6 flex flex-col items-center text-center transition-transform transform hover:scale-105">
+  <div className="bg-white/80 select-none shadow-sm rounded-lg p-6 flex flex-col items-center text-center transition-transform transform hover:scale-105">
     <div className="w-16 h-16 flex items-center justify-center mb-4">
       <Image src={icon} alt={title} width={48} height={48} />
     </div>
@@ -17,7 +17,7 @@ const FeatureCard = ({ icon, title, description }) => (
 
 // Componente para los modelos/templates
 const TemplateCard = ({ image, name, features, link }) => (
-  <div className="bg-white shadow-md rounded-lg overflow-hidden flex flex-col">
+  <div className="bg-white select-none shadow-md rounded-lg overflow-hidden flex flex-col">
     <div className="relative h-64 w-full">
       <Image 
         src={image} 
@@ -41,7 +41,7 @@ const TemplateCard = ({ image, name, features, link }) => (
       </ul>
     </div>
     <div className="p-6 pt-0 mt-auto">
-      <Link href={link} className="block w-full bg-emerald-700 hover:bg-emerald-600 text-white text-center py-2 px-4 rounded transition-colors">
+      <Link href={link} className="block w-full select-none bg-emerald-700 hover:bg-emerald-600 text-white text-center py-2 px-4 rounded transition-colors">
         Ver ejemplo
       </Link>
     </div>
@@ -94,25 +94,25 @@ const EcoWebsInvitaciones = () => {
 
   const templates = [
     {
-      image: "/images/templates/rustico.jpg",
+      image: "/images/templates/rusticoEleganteTemplate.jpg",
       name: "Rústico Elegante",
       features: ["Estilo campestre", "Fondos texturizados", "Detalles florales", "Tipografías caligráficas"],
-      link: "/web-templates/rustico"
+      link: "https://bodaelegante.vercel.app/"
     },
     {
-      image: "/images/templates/moderno.jpg",
+      image: "/images/templates/modernaMinimalTemplate.jpg",
       name: "Moderno Minimalista",
       features: ["Diseño limpio", "Estilo contemporáneo", "Animaciones sutiles", "Colores personalizables"],
-      link: "/web-templates/moderno"
+      link: "https://bodamodernaminimal.vercel.app/"
     },
     {
-      image: "/images/templates/romantico.jpg",
+      image: "/images/icons/invDesarrollo.svg",
       name: "Romántico Clásico",
       features: ["Detalles ornamentales", "Paleta en tonos suaves", "Elegantes transiciones", "Estilos tradicionales"],
       link: "/web-templates/romantico"
     },
     {
-      image: "/images/templates/boho.jpg",
+      image: "/images/icons/invDesarrollo.svg",
       name: "Bohemio Chic",
       features: ["Estética natural", "Elementos bohemios", "Colores tierra", "Decoraciones étnicas"],
       link: "/web-templates/boho"
@@ -144,7 +144,7 @@ const EcoWebsInvitaciones = () => {
                 >
                   Descubrir características
                 </button>
-                <Link href="/contact" className="px-6 py-3 border-2 border-emerald-700 text-emerald-800 rounded-md hover:bg-emerald-50 transition-colors">
+                <Link href="https://wa.me/56949866129" className="px-6 py-3 border-2 border-emerald-700 text-emerald-800 rounded-md hover:bg-emerald-50 transition-colors">
                   Solicitar información
                 </Link>
               </div>
@@ -152,11 +152,14 @@ const EcoWebsInvitaciones = () => {
             
             <div className="md:w-1/2">
               <div className="relative w-full aspect-[9/16] max-w-xs mx-auto md:max-w-sm">
-                <Image 
-                  src="/images/templates/web-preview.png" 
+              <video 
+                  src="/images/templates/elegante.mp4" 
                   alt="Invitación web" 
-                  fill
                   className="object-contain rounded-2xl shadow-lg"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
                 />
                 {/* Elementos decorativos */}
                 <div className="absolute -top-4 -right-4 w-24 h-24 bg-emerald-100 rounded-full z-[-1]" />
@@ -454,7 +457,7 @@ const EcoWebsInvitaciones = () => {
             <Link href="/contact" className="px-8 py-3 bg-white text-emerald-700 rounded-md hover:bg-emerald-50 transition-colors font-semibold text-lg">
               Solicitar información
             </Link>
-            <Link href="/ecoproducts" className="px-8 py-3 border-2 border-white rounded-md hover:bg-emerald-600 transition-colors font-medium text-lg">
+            <Link href="/ecoproducts" className="px-8 py-3 border-2 text-yellow-300 border-white rounded-md hover:bg-emerald-600 transition-colors font-medium text-lg">
               Ver todos nuestros productos
             </Link>
           </div>

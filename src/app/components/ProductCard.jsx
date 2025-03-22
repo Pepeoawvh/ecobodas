@@ -29,6 +29,11 @@ const ProductCard = ({
     featured = false
   } = product;
 
+  const isGifUrl = (url) => {
+    if (!url) return false;
+    return url.toLowerCase().endsWith('.gif');
+  };
+
   const isVideoUrl = (url) => {
     if (!url) return false;
     const videoExtensions = ['.mp4', '.webm', '.ogg'];
@@ -56,7 +61,7 @@ const ProductCard = ({
 
   return (
     <div 
-      className={`relative rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow group h-[500px] w-[280px] mx-auto ${isAdmin ? '' : 'hover:opacity-100'}`}
+      className={`relative select-none rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow group h-[500px] w-[280px] mx-auto ${isAdmin ? '' : 'hover:opacity-100'}`}
       onMouseEnter={() => !isAdmin && setIsHovered(true)}
       onMouseLeave={() => !isAdmin && setIsHovered(false)}
     >
@@ -70,12 +75,18 @@ const ProductCard = ({
       </div>
       
       {/* Overlay oscuro para mejorar legibilidad del texto */}
-      <div className={`absolute inset-0 bg-black ${showInfo ? 'bg-opacity-40' : 'bg-opacity-10'} transition-opacity duration-300 ${isHovered ? 'opacity-0' : 'opacity-100'}`}></div>
+      <div className={`absolute select-none inset-0 bg-white backdrop-blur-sm ${showInfo ? 'bg-opacity-30' : 'bg-opacity-10'} transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}></div>
       
       {/* Video que aparece al hacer hover */}
       {videoUrl && (
-        <div className={`absolute inset-0 w-full h-full transition-opacity duration-300 z-10 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
-          {isVideoUrl(videoUrl) ? (
+        <div className={`absolute inset-0 w-full h-full transition-opacity duration-300 z-10 ${isHovered ? 'opacity-0' : 'opacity-100'}`}>
+          {isGifUrl(videoUrl) ? (
+            <img 
+              src={videoUrl} 
+              alt={`${title} animación`}
+              className="w-full h-full object-cover"
+            />
+          ) : isVideoUrl(videoUrl) ? (
             <video 
               src={videoUrl} 
               className="w-full h-full object-cover"
@@ -86,7 +97,7 @@ const ProductCard = ({
             />
           ) : (
             <iframe
-              src={isHovered ? getEmbedUrl(videoUrl) : ''}
+              src={isHovered ? '' : getEmbedUrl(videoUrl)}
               className="w-full h-full"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -115,12 +126,12 @@ const ProductCard = ({
       )}
       
       {/* Contenido de la tarjeta superpuesto */}
-      <div className="absolute inset-0 flex flex-col justify-between p-4 text-white z-20">
+      <div className="absolute inset-0 flex flex-col justify-between p-4 text-teal-700 z-20">
         {/* Información del producto (título, descripción, etc.) */}
         {showInfo && (
-          <div className={`transition-opacity duration-300 ${isHovered ? 'opacity-0' : 'opacity-100'}`}>
+          <div className={`transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
             <div className="flex justify-between items-center">
-              <span className="text-xs font-semibold px-2 py-1 bg-emerald-700 rounded-full">{category}</span>
+              <span className="text-xs font-semibold px-2 py-1 bg-emerald-100 rounded-full">{category}</span>
               {productType && (
                 <span className="text-xs bg-emerald-100 text-emerald-800 px-2 py-1 rounded-full">
                   {productType}
@@ -128,7 +139,7 @@ const ProductCard = ({
               )}
             </div>
             <h3 className="text-xl font-bold mt-3 drop-shadow-md">{title}</h3>
-            <p className="text-white text-sm mt-2 line-clamp-3 drop-shadow-md">{description}</p>
+            <p className="text-teal-800 text-sm mt-2 line-clamp-3 drop-shadow-md">{description}</p>
           </div>
         )}
         
@@ -138,13 +149,13 @@ const ProductCard = ({
         {/* Precio y botones en la parte inferior */}
         <div>
           {showInfo && (
-            <p className={`text-2xl font-bold mt-2 mb-4 drop-shadow-md transition-opacity duration-300 ${isHovered ? 'opacity-0' : 'opacity-100'}`}>
+            <p className={`text-2xl font-bold mt-2 mb-4 drop-shadow-md transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
               ${price}
             </p>
           )}
           
           {isAdmin ? (
-            <div className="flex justify-between items-center bg-black bg-opacity-50 p-2 rounded">
+            <div className="flex justify-between items-center bg-black bg-opacity-30 p-2 rounded">
               <button
                 onClick={() => onToggleFeatured(product)}
                 className={`p-2 rounded-full ${
@@ -181,13 +192,13 @@ const ProductCard = ({
               </div>
             </div>
           ) : (
-            <div className={`flex flex-col space-y-2 ${isHovered ? 'bg-black bg-opacity-40 p-2 rounded pointer-events-auto' : ''}`}>
+            <div className={`flex flex-col space-y-2 ${isHovered ? 'bg-white bg-opacity-40 rounded pointer-events-auto' : ''}`}>
               {productType === "Invitación Digital" && previewLink && (
                 <Link
                   href={previewLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full border-2 border-white text-white text-sm hover:bg-emerald-700 hover:border-emerald-700 py-2 px-4 rounded transition-colors inline-block text-center"
+                  className="w-full border-2 border-emerald-600 text-emerald-600 hover:text-yellow-400 text-sm hover:bg-emerald-800 hover:border-white py-2 px-4 rounded transition-colors inline-block text-center"
                 >
                   Ver Demo
                 </Link>

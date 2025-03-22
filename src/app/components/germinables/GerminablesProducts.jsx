@@ -1,10 +1,10 @@
 'use client'
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { firestoreDB } from '../../firebase/config';
 import { ephesis } from '../../ui/fonts';
+import ProductCard from '../ProductCard'; // Importar ProductCard
 
 const GerminablesProducts = () => {
   const [products, setProducts] = useState([]);
@@ -50,7 +50,7 @@ const GerminablesProducts = () => {
     : products.filter(product => product.category.toLowerCase() === activeCategory);
 
   return (
-    <section id="products" className="py-16 bg-white">
+    <section id="products" className="select-none py-16 bg-white">
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-emerald-800 mb-6">
@@ -85,29 +85,11 @@ const GerminablesProducts = () => {
         ) : filteredProducts.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredProducts.map(product => (
-              <div key={product.id} className="bg-white border border-emerald-100 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                <div className="relative h-64">
-                  <Image 
-                    src={product.imageUrl || "/images/placeholder-product.jpg"} 
-                    alt={product.name}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold text-emerald-800 mb-2">{product.name}</h3>
-                  <p className="text-emerald-700 mb-4">{product.description}</p>
-                  <div className="flex justify-between items-center">
-                    <Link 
-                      href={`/ecoproducts/${product.id}`}
-                      className="text-emerald-700 font-medium hover:text-emerald-600"
-                    >
-                      Ver detalles →
-                    </Link>
-                    <span className="font-bold text-emerald-800">${product.price}</span>
-                  </div>
-                </div>
-              </div>
+              <ProductCard 
+                key={product.id}
+                product={product}
+                showInfo={true} // Mostrar información detallada
+              />
             ))}
           </div>
         ) : (

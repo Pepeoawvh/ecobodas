@@ -5,7 +5,7 @@ import { ephesis } from '../../ui/fonts';
 
 const GerminablesHero = () => {
   return (
-    <section className="relative py-20 md:py-28 bg-gradient-to-b from-emerald-50 to-white">
+    <section className="relative select-none py-20 md:py-28 bg-gradient-to-b from-emerald-50 to-white">
       <div className="absolute inset-0 overflow-hidden z-0">
         <div className="absolute top-0 left-0 w-64 h-64 bg-emerald-100 rounded-full opacity-40 -translate-x-1/2 -translate-y-1/2" />
         <div className="absolute bottom-0 right-0 w-80 h-80 bg-emerald-100 rounded-full opacity-30 translate-x-1/4 translate-y-1/4" />
@@ -33,7 +33,7 @@ const GerminablesHero = () => {
           <div className="md:w-1/2">
             <div className="relative w-full aspect-square max-w-md mx-auto">
               <Image 
-                src="/images/products/germinable-hero.jpg" 
+                src="/images/germinables/germinablesHero.svg" 
                 alt="Invitación Germinable" 
                 fill
                 className="object-cover rounded-2xl shadow-lg"

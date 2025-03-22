@@ -33,7 +33,7 @@ const GerminablesNav = () => {
   };
   
   return (
-    <nav className={`bg-white py-4 z-20 ${isSticky ? 'sticky top-0 shadow-md' : ''}`}>
+    <nav className={`bg-white py-4 select-none z-20 ${isSticky ? 'sticky top-0 shadow-md' : ''}`}>
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex justify-center md:justify-start space-x-2 md:space-x-8 overflow-x-auto scrollbar-thin scrollbar-thumb-emerald-200">
           <button 
