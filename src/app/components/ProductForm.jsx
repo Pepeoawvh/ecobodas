@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const ProductForm = ({ product, onSubmit, onCancel }) => {
   const [formData, setFormData] = useState({
@@ -9,6 +9,7 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
     productType: product?.productType || '',
     image: product?.image || '',
     paymentLink: product?.paymentLink || '',
+    paymentLinkType: product?.paymentLinkType || 'mercadopago',
     previewLink: product?.previewLink || '',
     videoUrl: product?.videoUrl || '',
     featured: product?.featured || false,
@@ -30,6 +31,32 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
     "Recuerdo Sustentable",
     "Objeto Protocolar"
   ];
+
+  // Tipos de enlaces de pago
+  const paymentLinkTypes = [
+    { value: 'mercadopago', label: 'Link Mercado Pago' },
+    { value: 'whatsapp', label: 'WhatsApp' },
+    { value: 'otrolink', label: 'Otro Link' }
+  ];
+
+  // Efecto para pre-llenar el campo de WhatsApp cuando se cambia el tipo de enlace
+  useEffect(() => {
+    if (formData.paymentLinkType === 'whatsapp' && 
+        (!formData.paymentLink || !formData.paymentLink.startsWith('https://wa.me/'))) {
+      setFormData(prevData => ({
+        ...prevData,
+        paymentLink: 'https://wa.me/569'
+      }));
+    }
+  }, [formData.paymentLinkType]);
+
+  const handlePaymentLinkTypeChange = (e) => {
+    const newType = e.target.value;
+    setFormData(prevData => ({
+      ...prevData,
+      paymentLinkType: newType
+    }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -138,7 +165,7 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
         {formData.productType === "Invitación Digital" && (
           <>
             <div>
-              <label className="block text-sm font-medium text-gray-700">Link de Vista Previa</label>
+              <label className="block text-sm font-medium text-gray-700">Link Demo</label>
               <input
                 type="url"
                 value={formData.previewLink}
@@ -162,23 +189,56 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
                 <br />- Enlaces de YouTube (ej: https://youtube.com/watch?v=XXXXXXXXXXX)
                 <br />- Enlaces de YouTube Shorts (ej: https://youtube.com/shorts/XXXXXXXXXXX)
                 <br />- Videos directos (ej: https://ejemplo.com/video.mp4)
+                <br />- Archivos GIF animados (ej: https://ejemplo.com/animacion.gif)
               </p>
             </div>
           </>
         )}
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Link de Pago Mercado Pago</label>
+          <label className="block text-sm font-medium text-gray-700">Tipo de Enlace</label>
+          <select
+            value={formData.paymentLinkType}
+            onChange={handlePaymentLinkTypeChange}
+            className="mt-1 w-full p-2 border rounded"
+            required
+          >
+            {paymentLinkTypes.map((linkType) => (
+              <option key={linkType.value} value={linkType.value}>
+                {linkType.label}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            {formData.paymentLinkType === 'mercadopago' 
+              ? 'Link de Pago Mercado Pago' 
+              : formData.paymentLinkType === 'whatsapp' 
+                ? 'Link de WhatsApp' 
+                : 'Enlace Personalizado'}
+          </label>
           <input
             type="url"
             value={formData.paymentLink}
             onChange={(e) => setFormData({...formData, paymentLink: e.target.value})}
             className="mt-1 w-full p-2 border rounded"
-            placeholder="ENLACE DE PAGO..."
+            placeholder={
+              formData.paymentLinkType === 'mercadopago' 
+                ? "https://www.mercadopago.cl/checkout/v1/..." 
+                : formData.paymentLinkType === 'whatsapp' 
+                  ? "https://wa.me/56912345678" 
+                  : "https://ejemplo.com/..."
+            }
             required
           />
           <p className="mt-1 text-sm text-gray-500">
-            Ingresa el link de pago generado en Mercado Pago
+            {formData.paymentLinkType === 'mercadopago' 
+              ? 'Ingresa el link de pago generado en Mercado Pago'
+              : formData.paymentLinkType === 'whatsapp' 
+                ? 'Solo necesitas editar el número después de "https://wa.me/"'
+                : 'Ingresa el enlace personalizado para este producto'}
           </p>
         </div>
 

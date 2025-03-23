@@ -72,7 +72,7 @@ const GerminablesBenefits = () => {
             <div className="md:w-1/3 mb-6 md:mb-0">
               <div className="relative w-full aspect-square max-w-xs mx-auto">
                 <Image 
-                  src="/images/products/ecological-impact.jpg" 
+                  src="/images/icons/ecobeneficios.svg" 
                   alt="Impacto ecológico" 
                   fill
                   className="object-cover rounded-lg"

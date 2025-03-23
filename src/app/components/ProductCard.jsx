@@ -24,10 +24,23 @@ const ProductCard = ({
     description = '',
     price = '0',
     paymentLink = '#',
+    paymentLinkType = 'mercadopago', // Nuevo campo con valor por defecto
     previewLink = '',
     videoUrl = '',
     featured = false
   } = product;
+
+  // Definir el texto del botón según el tipo de enlace
+  const getButtonText = () => {
+    switch (paymentLinkType) {
+      case 'mercadopago':
+        return 'Comprar';
+      case 'whatsapp':
+      case 'otrolink':
+      default:
+        return 'Cotizar';
+    }
+  };
 
   const isGifUrl = (url) => {
     if (!url) return false;
@@ -209,7 +222,7 @@ const ProductCard = ({
                 rel="noopener noreferrer"
                 className="w-full border-2 text-shadow text-sm text-white bg-emerald-800 py-2 px-4 rounded hover:bg-emerald-600 transition-colors inline-block text-center"
               >
-                Cotizar
+                {getButtonText()}
               </Link>
             </div>
           )}
